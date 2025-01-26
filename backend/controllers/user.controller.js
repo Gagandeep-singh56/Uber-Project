@@ -7,10 +7,11 @@ const {validationResult}=require('express-validator')
 // why async?
 
 module.exports.registeruser= async(req,res,next)=>{
-
+//this will handle validation error ,but the model validation is not handled and give error in console 
+// resulting in not connection
     const errors=validationResult(req);
     if(!errors.isEmpty())
-        return res.status(400).json({errors:error.array()});
+        return res.status(400).json({errors: errors.array()});
 
    
 
@@ -20,14 +21,17 @@ module.exports.registeruser= async(req,res,next)=>{
     const firstname=fullname.firstname;
     const lastname=  fullname.lastname;
     
+    try{
     const user = await CreateUser.createuser(firstname,lastname,email,hashedPassword);
-    // till await is written it will not exec the next statement as it wiats for the promise to relove or reject
-    console.log(user)
-    const token= user.generateAuthToken(); //called on instance  {real user}
-
-    
-    res.status(200).json({success:'User registered successfully',user,token})
-
+     // till await is written it will not exec the next statement as it wiats for the promise to relove or reject
+     console.log(user)
+     const token= user.generateAuthToken(); //called on instance  {real user}
+     res.status(200).json({success:'User registered successfully',user,token})
+ 
+    }catch(e){
+       return res.status(400).json({error:e})
+    }
+   
 
 
     

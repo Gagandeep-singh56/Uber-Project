@@ -25,13 +25,12 @@ module.exports.createuser=async(firstname,lastname,email,password)=>{  //destruc
         email,
         password
     });
-
-
-    console.log(user);
-   
+    // console.log(user);
     return user;// resolve or reject will see in called function
 }catch(e){
-    return console.log(e);       
+   console.log(e); 
+//    validatioon error in model ,throw as we have res obj in controller
+    throw e;
 }
    
 } 
