@@ -10,4 +10,4 @@ server.listen(port,()=>{
     console.log(`server is running on port ${port}`);
 }) 
 
-// modals ceratse krne hain toh phele flow understand kr leta hun git setup alse  
+// modals create krne hain toh phele flow understand kr leta hun. 
