@@ -1,3 +1,4 @@
+// add doc for api at last 
 const express=require('express');
 const app=express();  
 
@@ -5,7 +6,8 @@ const dotenv=require('dotenv');
 dotenv.config();
 const connection=require('./db/db');
 connection();
-
+const cookieParser=require('cookie-parser');
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));  // to support encoded url text type to json
 // add express.json() for parsing the req body as it was stringify before sending from the frontend  
