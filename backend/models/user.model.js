@@ -24,6 +24,7 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true,
         minlength:[9,'Min length should be 9 '],
+        select:false,  //important to do galti se bhi code se bahar na aaje password 
         // how willthis work we will see 
         validate:[
             {
@@ -40,7 +41,6 @@ const userSchema=new mongoose.Schema({
                 message:'Password must contain at least one uppercase letter.',
             }
         ],
-        select:false,  //important to do galti se bhi code se bahar na aaje password 
      },
      SocketId:{
        type:String,
@@ -76,7 +76,12 @@ return  token;
 }
 // add try catch  everwhere nahi toh baad mein pta ni chalega kya fatgaya 
 userSchema.methods.ComparePasswords= async function(password){
-    return await bycrpt.compare(password,this.password)
+    try{
+    return await bcrypt.compare(password,this.password);
+    }catch(e){
+        console.log(e);
+        throw e;
+    }
 }
 userSchema.methods.HashPassword=async function(password){
     return await bcrypt.hash(password,10);

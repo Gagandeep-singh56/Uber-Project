@@ -31,8 +31,36 @@ module.exports.registeruser= async(req,res,next)=>{
     }catch(e){
        return res.status(400).json({error:e})
     }
-   
 
-
-    
 } 
+module.exports.loginuser= async(req,res,next)=>{
+    
+    const errors=validationResult(req);
+    if(!errors.isEmpty())
+         return res.status(400).json({errors: errors.array()});
+
+    const{email,password}=req.body;
+    
+    try{
+        result=await userModel.findOne({email:email}).select('+password');
+        // result will be an mongoose document 
+
+        if(!result)
+            return res.status(401).json({error:"Either email or Password does not match"});
+       
+        const comparepasswords=await result.ComparePasswords(password); 
+        if(!comparepasswords)
+            return res.status(401).json({error:"Either email or Password does not match"});
+
+        const token =result.generateAuthToken();
+        //yes token is sent here also think it is needed 
+        // token sent as secret is with us so no need to store token we can just validate it when it come.
+        return res.status(200).json({success:"You are successfully Logged In",Token:token});
+
+    } catch(e)
+    {
+        return res.status(400).json({err:"i am here"});
+    }
+
+}
+

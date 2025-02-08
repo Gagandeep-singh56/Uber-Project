@@ -22,7 +22,8 @@ router.post('/register',
     body('email').isEmail().withMessage('Invalid Email'),
     body('password').isLength({min:9}).withMessage('Atleast 9 char and rules* must be satisfied')
     ],userController.registeruser)
- 
+
+router.post('/login',[body('email').isEmail().withMessage('Invalid Email'),body('password').isLength({min:9}).withMessage('Atleast 9 char is required')],userController.loginuser);
 
 module.exports=router;
 
