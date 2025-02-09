@@ -22,6 +22,11 @@ module.exports.registeruser= async(req,res,next)=>{
     const lastname=  fullname.lastname;
     
     try{
+    const find=await userModel.findOne({email:email});
+    if(find)
+    {
+        return res.status(400).send("User already exists");
+    }   
     const user = await CreateUser.createuser(firstname,lastname,email,hashedPassword);
      // till await is written it will not exec the next statement as it wiats for the promise to relove or reject
      console.log(user)

@@ -70,7 +70,7 @@ userSchema.methods.generateAuthToken=function(){
 // user instance(mongoose document or user object)** will call this function when entry in db is done id is automatically  generated  there
 // now instance will caall this funtion it will have an id 
 
-const token= jwt.sign({_id:this._id},process.env.JWT_SECRET);
+const token= jwt.sign({_id:this._id},process.env.JWT_SECRET,{expiresIn:'24h'});
 return  token;
 // return "fhfhd";
 }

@@ -7,6 +7,7 @@ dotenv.config();
 const connection=require('./db/db');
 connection();
 const cookieParser=require('cookie-parser');
+const captainroutes=require('./routes/captain.routes');
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));  // to support encoded url text type to json
@@ -17,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));  // to support encoded url text
 // will explore when we hot via some url bi toh port ko hi hit krre ho so not making sense  but it 
 // awesome we will explore this  
 const userRoutes= require('./routes/user.routes')
- 
+app.use('/captain',captainroutes);
 app.use('/users',userRoutes);
 
  

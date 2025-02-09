@@ -29,7 +29,7 @@ router.post('/login',[body('email').isEmail().withMessage('Invalid Email'),body(
 
 router.get('/profile',authMiddleware.authUser,userController.getprofile);
 
-router.post('/logout',authMiddleware.authUser,userController.logout);
+router.post('/logout',userController.logout);
 // as of current implementation one user  can login in  many times as all tokens willlbe valid tokens so if one logs out other token will be working till its expire time hits   so we can add functionallity to support one one login setup and user needs to logout inorder to login again in that case 
 // if token of the user lost somehow while he is logged in then in that case   he  cannot logout and caanot login again in other device so he need to wait till token get expirred and he needs to login again which happens many a time with us ..
 
